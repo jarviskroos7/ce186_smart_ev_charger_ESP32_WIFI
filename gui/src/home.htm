@@ -23,8 +23,8 @@
 <body>
   <div id="page">
     <div class="header">
-      <h1>Open<span>EVSE</span></h1>
-      <h3>WiFi</h3>
+      <h1>Davis<span>EVSE</span></h1>
+      <h3>CEE 186</h3>
     </div>
 
     <div class="container" data-bind="visible: !initialised()">
@@ -34,8 +34,10 @@
     <div class="container" data-bind="visible: initialised" style="display: none">
 
       <div class="tabs">
-        <input id="tab-3" type="radio" name="tab-group" data-bind="checked: tab" value="status" />
-        <label for="tab-3">OpenEVSE</label>
+        <input id="tab-3" type="radio" name="tab-group" data-bind="checked: tab" value="extra" />
+        <label for="tab-3">Charger 1</label>
+        <input id="tab-6" type="radio" name="tab-group" data-bind="checked: tab" value="status" />
+        <label for="tab-6">Charger 2</label>
         <input id="tab-1" type="radio" name="tab-group" data-bind="checked: tab" value="system" />
         <label for="tab-1">System</label>
         <input id="tab-2" type="radio" name="tab-group" data-bind="checked: tab" value="services" />
@@ -1003,6 +1005,508 @@
         </div>
         <!--end tab 3-->
 
+         <!--TAB 6: Charger 2 -->
+         <div id="content-6" data-bind="visible: isExtra">
+
+          <!-- Session Status -->
+          <div data-bind="visible: status.isError" class="box box-full left error">
+            <h4>EVSE Error</h4>
+            <span data-bind="text: status.estate"></span>
+          </div>
+
+          <div data-bind="visible: !status.evse_connected()" class="box box-full left error">
+            <h4>EVSE Error</h4>
+            <span>OpenEVSE not responding or not connected</span>
+          </div>
+
+          <div data-bind="visible: !status.isError() &amp;&amp; status.evse_connected(),
+                          css: { ready: status.isReady(),
+                                 connected: status.isConnected() &amp;&amp; !status.isCharging(),
+                                 charging: status.isCharging(),
+                                 sleeping: status.isPaused() &amp;&amp; 0 == status.vehicle(),
+                                 sleeping_connected: status.isPaused() &amp;&amp; 1 == status.vehicle() }"
+               class="box box-full left">
+            <h2 class="left">Status</h2>
+            <h2 class="right" data-bind="text: status.estate"></h2>
+
+            <table>
+              <tr>
+                <th>Current</th>
+                <th>Energy</th>
+                <th>Temp</th>
+                <th>Elapsed</th>
+              </tr>
+              <tr>
+                <td><span data-bind="text: scaleString(status.amp(), 1000, 2) + ' A'"></span></td>
+                <td><span data-bind="text: scaleString(status.session_energy(), 1000, 2) + ' kWh'"></span></td>
+                <td><span data-bind="text: scaleString(status.temp(), 10, 1) + ' &deg;C'"></span></td>
+                <td><span data-bind="text: openevse.time.elapsed"></span></td>
+              </tr>
+            </table>
+
+            <div data-bind="visible: ecoMode() &amp;&amp; isEcoModeAvailable()">
+              <br>
+              <span data-bind="visible: haveSolar"><b>Solar:</b></span>
+              <span data-bind="visible: haveGridIe"><b>Grid Import/Export:</b></span>
+              <span data-bind="text: haveGridIe() ? status.grid_ie() : status.solar()"></span>W -
+              <span data-bind="text: formatUpdate(openevse.time.divert_update()), css: updateClass(openevse.time.divert_update())"></span>
+              |
+              <span data-bind="visible: status.isReady()"><b>Vehicle not connected</b></span>
+              <span data-bind="visible: status.isSleeping() || (status.isConnected() &amp;&amp; !status.isCharging())"><b>Waiting for solar</b></span>
+              <span data-bind="visible: status.isCharging()"><b>Charging from solar</b></span>
+              <!--span data-bind="visible: status.isCharging()"><b>Fast charging</b></span-->
+              <span data-bind="visible: status.isCharging()">
+                | <b>Charge rate:</b> <span data-bind="text: status.charge_rate"></span>A
+              </span>
+              <span data-bind="visible: advancedMode">
+                <br/>
+                <b>Voltage:</b> <span data-bind="text: parseFloat(status.voltage()).toFixed(1)"></span>V
+                <span data-bind="visible: status.available_current() !== false">| <b>Available Current:</b> <span data-bind="text: parseFloat(status.available_current()).toFixed(2)"></span>A</span>
+                <span data-bind="visible: status.smoothed_available_current() !== false">| <b>Smoothed Current:</b> <span data-bind="text: parseFloat(status.smoothed_available_current()).toFixed(2)"></span>A</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Session Options -->
+          <div class="box380 left" data-bind="visible: status.evse_connected">
+            <h2>Charge Options</h2>
+
+            <div data-bind="visible: isEcoModeAvailable">
+              <span data-bind="css: {selected: !ecoMode() }">Normal (fast)</span>
+              <label class="switch">
+                <input type="checkbox" data-bind="checked: ecoMode" />
+                <div class="slider round"></div>
+              </label>
+              <span data-bind="css: {selected: ecoMode }">Eco (PV divert)</span><br/>
+            </div>
+
+            <p data-bind="visible: !status.isError() &amp;&amp; !ecoMode()">
+              <h3 data-bind="visible: status.manual_override">Manual Override</h3>
+              <button data-bind="click: setOverride,
+                                 enable: !setOverrideFetching(),
+                                 visible: !status.manual_override(),
+                                 text: status.isPaused() ? 'Start' : 'Pause'">Start</button>
+              <button data-bind="click: clearOverride,
+                                 enable: !clearOverrideFetching(),
+                                 visible: status.manual_override()">Clear</button>
+            </p>
+
+            <span data-bind="visible: !status.isError() &amp;&amp; !ecoMode()">
+              <hr \>
+              <p>
+                <b>Time limit:</b><br\>
+                <select data-bind="options: openevse.timeLimits,
+                                   optionsText: 'name',
+                                   optionsValue: 'value',
+                                   value: openevse.timeLimit,
+                                   enable: !openevse.updatingTimeLimit() &amp;&amp; status.isConnected(),
+                                   css: { saved: openevse.savedTimeLimit }"></select>
+              </p>
+
+              <p>
+                <b>Energy limit:</b><br\>
+                <select data-bind="options: openevse.chargeLimits,
+                                   optionsText: 'name',
+                                   optionsValue: 'value',
+                                   value: openevse.chargeLimit,
+                                   enable: !openevse.updatingChargeLimit() &amp;&amp; status.isConnected(),
+                                   css: { saved: openevse.savedChargeLimit }" ></select>
+              </p>
+            </span>
+
+            <hr> <br>
+            <div data-bind="with: schedule">
+              <b>Timer:</b><br>
+                Start: <input type="time" data-bind="value: delayTimerStart, disable: $root.status.isError" />
+                &nbsp;&nbsp;
+                Stop: <input type="time" data-bind="value: delayTimerStop, disable: $root.status.isError" /><br/>
+                <br>
+                <button data-bind="text: delayTimerEnabled() ? 'Update' : 'Set',
+                                   enable: !updatingDelayTimer() &amp;&amp;
+                                           delayTimerValid() &amp;&amp;
+                                           !$root.status.isError(),
+                                   click: startDelayTimer">Set</button>
+                <button data-bind="visible: delayTimerEnabled(),
+                                   enable: !updatingDelayTimer() &amp;&amp;
+                                           !$root.status.isError(),
+                                   click: stopDelayTimer">Cancel</button>
+            </div>
+          </div>
+
+          <!-- Energy -->
+          <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
+            <h2>Energy</h2>
+            <table>
+              <tr>
+                <th>Energy</th>
+                <th></th>
+              </tr>
+              <tr>
+                <td>This Session:</td>
+                <td><span data-bind="text: scaleString(status.session_energy(), 1000, 2)+ ' kWh'"></span></td>
+              </tr>
+              <tr>
+                <td>Total:</td>
+                <td><span data-bind="text: scaleString(status.total_energy(), 1, 2)+ ' kWh'"></span></td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Sensor Values -->
+          <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
+            <h2>Sensor Values</h2>
+            <table>
+              <tr>
+                <th>Sensor</th>
+                <th>Value</th>
+              </tr>
+              <tr>
+                <td>Pilot:</td>
+                <td><span data-bind="text: status.pilot() + ' A'"></span></td>
+              </tr>
+              <tr>
+                <td>Current Now:</td>
+                <td><span data-bind="text: scaleString(status.amp(), 1000, 2) + ' A'"></span></td>
+              </tr>
+              <tr data-bind="visible: false !== status.voltage()">
+                <td>Voltage:</td>
+                <td><span data-bind="text: scaleString(status.voltage(), 1, 2) + ' V'"></span></td>
+              </tr>
+              <tr data-bind="visible: false !== status.temp1()">
+                <td>Temp1:</td>
+                <td><span data-bind="text: scaleString(status.temp1(), 10, 1) + ' &deg;C'"></span></td>
+              </tr>
+              <tr data-bind="visible: false !== status.temp2()">
+                <td>Temp2:</td>
+                <td><span data-bind="text: scaleString(status.temp2(), 10, 1) + ' &deg;C'"></span></td>
+              </tr>
+              <tr data-bind="visible: false !== status.temp3()">
+                <td>Temp3:</td>
+                <td><span data-bind="text: scaleString(status.temp3(), 10, 1) + ' &deg;C'"></span></td>
+              </tr>
+              <tr data-bind="visible: false !== status.temp4()">
+                <td>Temp4:</td>
+                <td><span data-bind="text: scaleString(status.temp4(), 10, 1) + ' &deg;C'"></span></td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Settings -->
+          <div class="box380 setup" data-bind="visible: status.evse_connected, css: { right: !advancedMode(), left: advancedMode() }">
+            <h2>Setup</h2>
+            <p data-bind="visible: !openevse.time.hasRTC()">
+              <b>Time: No RTC detected</b>
+            </p>
+            <p data-bind="with: openevse.time, visible: openevse.time.hasRTC()">
+              <b>Time:</b><br/>
+              <input type="date" data-bind="value: date, disable: automaticTime" />
+              <input type="time" data-bind="value: time, disable: automaticTime" /><br/>
+            </p>
+            <p data-bind="visible: openevse.time.hasRTC() && false !== config.time_zone() && 'ntp' === timeSource()">
+              <b>Time zone:</b><br/>
+              <select data-bind="options: zones.zones,
+                        optionsText: 'name',
+                        optionsValue: 'value',
+                        value: time_zone"></select>
+            </p>
+            <div data-bind="visible: openevse.time.hasRTC()">
+              Set time from
+              <select data-bind="value: timeSource" style="width: 100px">
+                <option value="manual">Manual</option>
+                <option value="browser">Browser</option>
+                <option value="ntp" data-bind="visible: false !== config.sntp_hostname()">NTP</option>
+              </select>
+              <button data-bind="click: setTime, text: (setTimeFetching() ? 'Saving' : (setTimeSuccess() ? 'Saved' : 'Set time')), disable: setTimeFetching">Set time</button>
+            </div>
+            <hr>
+            <p>
+              <b>Service Level:</b><br/>
+              <select data-bind="options: openevse.serviceLevels,
+                                 optionsText: 'name',
+                                 optionsValue: 'value',
+                                 value: config.service,
+                                 disable: openEvseService.fetching,
+                                 css: { saved: openEvseService.success }"></select>
+            </p>
+
+            <p>
+              <b>Max Current:</b><br/>
+              <select data-bind="options: openevse.currentLevels,
+                                  optionsText: 'name',
+                                  optionsValue: 'value',
+                                  value: config.max_current_soft,
+                                  disable: openEvseMaxCurrentSoft.fetching,
+                                  css: { saved: openEvseMaxCurrentSoft.success }"></select>
+            </p>
+          </div>
+
+          <!-- Current -->
+          <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
+            <h2>Current</h2>
+            <table>
+              <tr>
+                <th>Name</th>
+                <th>
+                </th>
+              </tr>
+              <tr>
+                <td>Service Level:</td>
+                <td>
+                  <span data-bind="text: status.service_level"></span>
+                </td>
+              </tr>
+              <tr>
+                <td>Level <span data-bind="text: status.service_level"></span> Minimum:</td>
+                <td>
+                  <span data-bind="text: config.min_current_hard() + ' A'"></span>
+                </td>
+              </tr>
+              <tr>
+                <td>Level <span data-bind="text: status.service_level"></span> Maximum:</td>
+                <td>
+                  <span data-bind="text: config.max_current_hard() + ' A'"></span>
+                </td>
+              </tr>
+              <tr>
+                <td>Sensor Scale:</td>
+                <td><span data-bind="text: config.scale"></span></td>
+              </tr>
+              <tr>
+                <td>Sensor Offset:</td>
+                <td><span data-bind="text: config.offset"></span></td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Safety -->
+          <div class="box380 left" data-bind="visible: status.evse_connected() &amp;&amp; (advancedMode() || !config.all_tests_enabled())">
+            <h2>Safety<span class="info" data-bind="click: toggle.bind($data, showSafety)"></span></h2>
+
+            <div class="box" data-bind="visible: showSafety()">
+              Hardware safety checks. Enable dev mode (System > Developer Mode) to enable/disable or use the physical LCD + menu button.
+            </div>
+
+            <div data-bind="visible: !config.all_tests_enabled()" class="box warning">
+              <h4>Warning!!</h4>
+              Not all the safety tests are enabled, please take extra care before charging your vehicle.
+            </div>
+
+            <table>
+              <tr>
+                <th>Test</th>
+                <th>Status</th>
+              </tr>
+              <tr data-bind="css: {error: 9 === status.state() }">
+                <td>GFI Self Test:</td>
+                <td>
+                  <label class="switch" data-bind="visible: developerMode">
+                    <input type="checkbox" data-bind="checked: config.gfci_check" />
+                    <div class="slider round"></div>
+                  </label>
+                  <span data-bind="text: config.gfci_check() ? 'Enabled' : 'Disabled'"></span>
+                </td>
+              </tr>
+              <tr data-bind="css: {error: 7 === status.state() }">
+                <td>Ground Monitoring:</td>
+                <td>
+                  <label class="switch" data-bind="visible: developerMode">
+                    <input type="checkbox" data-bind="checked: config.ground_check" />
+                    <div class="slider round"></div>
+                  </label>
+                  <span data-bind="text: config.ground_check() ? 'Enabled' : 'Disabled'"></span>
+                </td>
+              </tr>
+              <tr data-bind="css: {error: 8 === status.state() }">
+                <td>Stuck Contact Detection:</td>
+                <td>
+                  <label class="switch" data-bind="visible: developerMode">
+                    <input type="checkbox" data-bind="checked: config.relay_check" />
+                    <div class="slider round"></div>
+                  </label>
+                  <span data-bind="text: config.relay_check() ? 'Enabled' : 'Disabled'"></span>
+                </td>
+              </tr>
+              <tr data-bind="css: {error: 10 === status.state() }">
+                <td>Temperature Monitoring:</td>
+                <td>
+                  <label class="switch" data-bind="visible: developerMode">
+                    <input type="checkbox" data-bind="checked: config.temp_check" />
+                    <div class="slider round"></div>
+                  </label>
+                  <span data-bind="text: config.temp_check() ? 'Enabled' : 'Disabled'"></span>
+                </td>
+              </tr>
+              <tr data-bind="css: {error: 5 === status.state() }">
+                <td>Diode Check:</td>
+                <td>
+                  <label class="switch" data-bind="visible: developerMode">
+                    <input type="checkbox" data-bind="checked: config.diode_check" />
+                    <div class="slider round"></div>
+                  </label>
+                  <span data-bind="text: config.diode_check() ? 'Enabled' : 'Disabled'"></span>
+                </td>
+              </tr>
+              <tr data-bind="css: {error: 4 === status.state() }">
+                <td>Vent Required:</td>
+                <td>
+                  <label class="switch" data-bind="visible: developerMode">
+                    <input type="checkbox" data-bind="checked: config.vent_check" />
+                    <div class="slider round"></div>
+                  </label>
+                  <span data-bind="text: config.vent_check() ? 'Enabled' : 'Disabled'"></span>
+                </td>
+              </tr>
+              <tr>
+                <th>Error</th>
+                <th>Count</th>
+              </tr>
+              <tr>
+                <td>GFCI:</td>
+                <td><span data-bind="text: status.gfcicount"></span></td>
+              </tr>
+              <tr>
+                <td>No Ground:</td>
+                <td><span data-bind="text: status.nogndcount"></span></td>
+              </tr>
+              <tr>
+                <td>Stuck Contact:</td>
+                <td><span data-bind="text: status.stuckcount"></span></td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Hardware -->
+          <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
+            <h2>Hardware</h2>
+            <table>
+              <tr>
+                <th>OpenEVSE</th>
+                <th></th>
+              </tr>
+              <tr>
+                <td>Firmware:</td>
+                <td><span data-bind="text: config.firmware"></span></td>
+              </tr>
+              <tr>
+                <td colspan="2" data-bind="with: openevse">
+                  <button data-bind="click: restart, text: (restartFetching() ? 'Restarting...' : 'Restart'), disable: restartFetching">Restart</button>
+                </td>
+              </tr>
+              <tr>
+                <th>OpenEVSE WiFi</th>
+                <th></th>
+              </tr>
+              <tr data-bind="visible: false !== config.buildenv()">
+                <td>Firmware config:</td>
+                <td><span data-bind="text: config.buildenv"></span></td>
+              </tr>
+              <tr>
+                <td>Firmware version:</td>
+                <td><span data-bind="text: config.version"></span></td>
+              </tr>
+              <tr data-bind="visible: false !== config.espinfo()">
+                <td>ESP info:</td>
+                <td><span data-bind="text: config.espinfo"></span></td>
+              </tr>
+              <tr>
+                <td>Flash Size:</td>
+                <td><span data-bind="text: scaleString(config.espflash(), 1024, 0) + 'K'"></span></td>
+              </tr>
+              <tr>
+                <td>Free RAM:</td>
+                <td><span data-bind="text: scaleString(status.free_heap(), 1024, 0) + 'K'"></span></td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <button data-bind="click: restart, text: (restartFetching() ? 'Restarting...' : 'Restart'), disable: restartFetching">Restart</button>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
+            <h2>Vehicle Settings</h2>
+            <h3>Pause status <span class="info" data-bind="click: toggle.bind($data, showVehiclePauseStatus)"></span></h3>
+            <div class="box" data-bind="visible: showVehiclePauseStatus()">
+              Some vehicles will shutdown if left in sleep mode (pilot signal enable) and then can not be woken up by timers/PV divert. Changing the
+              pause state to disable should resolve this issue, however this removes the ability for the charger to detect if a vehicle is connected
+              when paused.
+            </div>
+            <div>
+              <span data-bind="css: {selected: !config.pause_uses_disabled() }">Sleep</span>
+              <label class="switch">
+                <input type="checkbox" data-bind="checked: config.pause_uses_disabled" />
+                <div class="slider round"></div>
+              </label>
+              <span data-bind="css: {selected: config.pause_uses_disabled }">Disable</span><br/>
+            </div>
+          </div>
+
+          <div class="box380" data-bind="visible: status.evse_connected,
+                                         css: { right: !advancedMode() &amp;&amp; !config.all_tests_enabled(),
+                                                left: advancedMode() || config.all_tests_enabled() }">
+            <h2>Display</h2>
+            <div>
+              <span data-bind="css: {selected: !advancedMode() }">Simple</span>
+              <label class="switch">
+                <input type="checkbox" data-bind="checked: advancedMode" />
+                <div class="slider round"></div>
+              </label>
+              <span data-bind="css: {selected: advancedMode }">Advanced</span><br/>
+            </div>
+
+            <hr/>
+
+            <p data-bind="visible: config.led_brightness() !== false">
+              <b>LED Brightness:</b><br\>
+              <span class="rangeslidercontainer">
+                <input type="range" min="0" max="255" class="rangeslider"
+                       data-bind="value: config.led_brightness,
+                                  disable: displayGroup.fetching(),
+                                  css: { saved: displayGroup.success }">
+              </span>
+            </p>
+            <!--p>
+              <button data-bind="click: displayGroup.save,
+                                 text: (displayGroup.fetching() ? 'Saving' :
+                                       (displayGroup.success() ? 'Saved' : 'Save')),
+                                 disable: displayGroup.fetching">Save</button>
+            </p-->
+          </div>
+
+          <div class="box box-full left">
+            <h2 class="left">History</h2>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                  <th>Energy</th>
+                  <th>Temp</th>
+                </tr>
+              </thead>
+              <tbody data-bind="foreach: logs.events">
+                <tr>
+                  <td><span data-bind="text: localTime"></span></td>
+                  <td><span data-bind="text: type"></span></td>
+                  <td><span data-bind="text: estate"></span></td>
+                  <td><span data-bind="text: scaleString(energy(), 1000, 2) + ' kWh'"></span></td>
+                  <td><span data-bind="text: scaleString(temperatureMax(), 1, 1) + ' &deg;C'"></span></td>
+                </tr>
+              </tbody>
+              <tfoot data-bind="visible: logs.hasMore, disable: logs.fetchingBlock">
+                <tr>
+                  <td colspan="5" data-bind="click: logs.updateNext, clickBubble: false" style="text-align: center;">Load more</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+        </div>
+        <!--end tab 6-->
+
         <!--TAB 4: RAPI -->
         <div id="content-4" data-bind="visible: isRapi() &amp;&amp; status.evse_connected()">
           <div class="box box-full left">
@@ -1326,7 +1830,6 @@
           </div>
         </div>
         <!--end TAB 5-->
-
       </div>
       <!--end content-->
 
