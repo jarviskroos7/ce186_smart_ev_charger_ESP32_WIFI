@@ -130,6 +130,10 @@
           <div class="box380 right">
             <h2>Administration</h2>
             <p>
+              <b>Email:</b><br>
+              <input type="text" autocapitalize="none" data-bind="textInput: config.www_username" pattern=".{100}" title="The field requires 15 characters" maxlength="100" required="">
+            </p>
+            <p>
               <b>Username:</b><br>
               <input type="text" autocapitalize="none" data-bind="textInput: config.www_username" pattern=".{15}" title="The field requires 15 characters" maxlength="15" required="">
               <span class="small-text validMessage">15 characters max</span>
