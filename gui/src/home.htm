@@ -42,9 +42,9 @@
         <label for="tab-6">Charger 2</label>
         <input id="tab-1" type="radio" name="tab-group" data-bind="checked: tab" value="system" />
         <label for="tab-1">System</label>
-        <input id="tab-2" type="radio" name="tab-group" data-bind="checked: tab" value="services" />
+        <!--<input id="tab-2" type="radio" name="tab-group" data-bind="checked: tab" value="services" />
         <label for="tab-2">Services</label>
-        <!--<input id="tab-4" type="radio" name="tab-group" data-bind="checked: tab" value="rapi" />
+        <input id="tab-4" type="radio" name="tab-group" data-bind="checked: tab" value="rapi" />
         <label for="tab-4" data-bind="visible: developerMode() &amp;&amp; status.evse_connected()">RAPI</label>
         <input id="tab-5" type="radio" name="tab-group" data-bind="checked: tab" value="vehicle" />
         <label for="tab-5">Vehicle</label>-->
@@ -216,6 +216,7 @@
         <!--end content 1-->
 
         <!--TAB 2: Services -->
+        <!--
         <div id="content-2" data-bind="visible: isServices">
           <div class="box380 left">
             <h2>Energy Monitoring <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="emoncms.jpg" align="left" /></h2>
@@ -381,9 +382,10 @@
             <p>
               <button data-bind="click: saveOhmKey, text: (saveOhmKeyFetching() ? 'Saving' : (saveOhmKeySuccess() ? 'Saved' : 'Save')), disable: saveOhmKeyFetching">Save</button>
             </p>
-          </div>
+          </div> -->
 
           <!-- Divert Mode -->
+          <!--
           <div class="box380 right">
             <h2>Solar PV divert</h2>
 
@@ -506,7 +508,7 @@
               <span data-bind="visible: config.ocpp_enabled"><b>&nbsp; Connected:&nbsp;<span data-bind="text: 1 === status.ocpp_connected() ? 'Yes' : 'No'"></span></b></span>
             </p>
           </div>
-        </div>
+        </div>-->
         <!--end TAB 2-->
 
         <!--TAB 3: OpenEVSE -->
