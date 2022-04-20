@@ -1841,6 +1841,40 @@
         <!--end tab 6-->
 
         <!--start tab 7-->
+<<<<<<< Updated upstream
+=======
+        <div id="content-6" data-bind="visible: isQueue">
+          <div data-bind="visible: !status.isError()"
+               class="box box-full left">
+            <h2 class="left" style="width: 1000px">Join Queue</h2>
+            <div data-bind="visible: !status.isError()">
+              <h3>Name</h3>
+              <input type="text" style="width: 300px">
+            </div>
+
+            <div data-bind="visible: !status.isError()" class="slidecontainer">
+              <h3>Desired Time</h3>
+              <input type="range" style="width: 300px" min="1" max="100" value="50" id="myRange">
+            </div>
+            <div>
+              <pre style="width: 500px">1 s                              100 s</pre>
+            </div>
+            <div class="slidecontainer">
+              <h3>Desired Energy</h3>
+              <input type="range" style="width: 300px" min="1" max="100" value="50" id="myRange">
+            </div>
+            <div>
+              <pre style="width: 500px">2.5 Wh                                250 Wh</pre>
+            </div>
+            <button data-bind="click: setTime, text: (setTimeFetching() ? 'Saving' : (setTimeSuccess() ? 'Saved' : 'Join')), disable: setTimeFetching" type="submit" margin-top="200px">Add Name</button>
+          </div>
+          <div data-bind="visible: !status.isError()"
+               class="box box-full left">
+            <h2 class="left" style="width: 1000px">Current Queue</h2>
+          </div>
+
+        </div>
+>>>>>>> Stashed changes
 
         <!--end tab 7-->
 
