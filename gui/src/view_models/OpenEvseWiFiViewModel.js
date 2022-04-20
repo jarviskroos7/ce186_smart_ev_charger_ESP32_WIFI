@@ -144,6 +144,7 @@ function OpenEvseWiFiViewModel(baseHost, basePort, baseProtocol)
   self.isVehicle = ko.pureComputed(function() { return "vehicle" === self.tab(); });
   self.isCharger1 = ko.pureComputed(function() { return "charger1" === self.tab(); });
   self.isCharger2 = ko.pureComputed(function() { return "charger2" === self.tab(); });
+  self.isQueue = ko.pureComputed(function() { return "queue" === self.tab(); });
   // Upgrade URL
   self.upgradeUrl = ko.observable("about:blank");
 
