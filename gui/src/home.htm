@@ -1579,6 +1579,7 @@
           </div>
 
           <!-- Current -->
+          <!--
           <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
             <h2>Current</h2>
             <table>
@@ -1614,8 +1615,7 @@
                 <td><span data-bind="text: config.offset"></span></td>
               </tr>
             </table>
-          </div>
-          
+          </div>-->
           <!-- Safety -->
           <!--
           <div class="box380 left" data-bind="visible: status.evse_connected() &amp;&amp; (advancedMode() || !config.all_tests_enabled())">
@@ -1716,6 +1716,7 @@
           -->
 
           <!-- Hardware -->
+          <!--
           <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
             <h2>Hardware</h2>
             <table>
@@ -1805,7 +1806,7 @@
                                   disable: displayGroup.fetching(),
                                   css: { saved: displayGroup.success }">
               </span>
-            </p>
+            </p>-->
             <!--p>
               <button data-bind="click: displayGroup.save,
                                  text: (displayGroup.fetching() ? 'Saving' :
