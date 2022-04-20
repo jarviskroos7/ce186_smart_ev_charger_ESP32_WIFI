@@ -783,6 +783,7 @@
           </div>
 
           <!-- Safety -->
+          <!--
           <div class="box380 left" data-bind="visible: status.evse_connected() &amp;&amp; (advancedMode() || !config.all_tests_enabled())">
             <h2>Safety<span class="info" data-bind="click: toggle.bind($data, showSafety)"></span></h2>
 
@@ -878,6 +879,7 @@
               </tr>
             </table>
           </div>
+          -->
 
           <!-- Hardware -->
           <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
@@ -1607,8 +1609,9 @@
               </tr>
             </table>
           </div>
-
+          
           <!-- Safety -->
+          <!--
           <div class="box380 left" data-bind="visible: status.evse_connected() &amp;&amp; (advancedMode() || !config.all_tests_enabled())">
             <h2>Safety<span class="info" data-bind="click: toggle.bind($data, showSafety)"></span></h2>
 
@@ -1704,6 +1707,7 @@
               </tr>
             </table>
           </div>
+          -->
 
           <!-- Hardware -->
           <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
@@ -1833,7 +1837,6 @@
               </tfoot>
             </table>
           </div>
-
         </div>
         <!--end tab 6-->
 
@@ -1851,7 +1854,9 @@
               <h3>Desired Time</h3>
               <input type="range" style="width: 300px" min="1" max="100" value="50" id="myRange">
             </div>
-
+            <div>
+              <pre style="width: 500px">1 s                              100 s</pre>
+            </div>
             <div class="slidecontainer">
               <h3>Desired Energy</h3>
               <input type="range" style="width: 300px" min="1" max="100" value="50" id="myRange">
@@ -1859,6 +1864,8 @@
             <div>
               <text style="width: 200px">1 kWh</text>
               <text style="width: 200px">3 kWh</text>
+
+              <pre style="width: 500px">2.5 Wh                                250 Wh</pre>
             </div>
             <button data-bind="click: setTime, text: (setTimeFetching() ? 'Saving' : (setTimeSuccess() ? 'Saved' : 'Join')), disable: setTimeFetching" type="submit" margin-top="200px">Add Name</button>
           </div>
