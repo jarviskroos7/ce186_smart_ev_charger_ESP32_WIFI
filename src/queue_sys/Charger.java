@@ -63,6 +63,12 @@ public class Charger {
         return rightSpot;
     }
 
+    /***
+     * state - whether the charger is available.
+     * time - time until the charger is available again.
+     * leftSpot - left parking spot for this charger
+     * rightSpot - right parking spot for this charger
+     */
     private ChargerState state;
     private int time;
     private Spot leftSpot;
