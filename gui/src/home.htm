@@ -1862,6 +1862,9 @@
               <input type="range" style="width: 300px" min="1" max="100" value="50" id="myRange">
             </div>
             <div>
+              <text style="width: 200px">1 kWh</text>
+              <text style="width: 200px">3 kWh</text>
+
               <pre style="width: 500px">2.5 Wh                                250 Wh</pre>
             </div>
             <button data-bind="click: setTime, text: (setTimeFetching() ? 'Saving' : (setTimeSuccess() ? 'Saved' : 'Join')), disable: setTimeFetching" type="submit" margin-top="200px">Add Name</button>
@@ -1893,5 +1896,4 @@
   <script src="lib.js"></script>
   <script src="home.js"></script>
 </body>
-
 </html>
