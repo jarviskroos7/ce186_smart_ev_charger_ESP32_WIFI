@@ -1844,7 +1844,7 @@
         <div id="content-6" data-bind="visible: isQueue">
           <div data-bind="visible: !status.isError()"
                class="box box-full left">
-            <h2 class="left" style="width: 1000px">Join Queue</h2>
+            <h2 class="left" style="width: 1000px" id="queueHead">Join Queue</h2>
             <div data-bind="visible: !status.isError()">
               <h3>Name</h3>
               <input type="text" style="width: 300px" id="myName">
@@ -1852,21 +1852,36 @@
 
             <div data-bind="visible: !status.isError()" class="slidecontainer">
               <h3>Desired Time</h3>
-              <input type="range" style="width: 300px" min="1" max="100" value="50" id="myRange">
+              <input type="range" style="width: 300px" min="1" max="100" value="50" id="myTime">
             </div>
             <div>
               <pre style="width: 500px">1 s                              100 s</pre>
             </div>
             <div class="slidecontainer">
               <h3>Desired Energy</h3>
-              <input type="range" style="width: 300px" min="1" max="100" value="50" id="myRange">
+              <input type="range" style="width: 300px" min="2.5" max="250" value="myTime.value" id="myEnergy" oninput="timeEnergy(this.value, myTime.value)">
             </div>
             <div>
-              <pre style="width: 500px">2.5 Wh                                250 Wh</pre>
+              <pre style="width: 500px">2.5 Wh                             250 Wh</pre>
             </div>
-            <button data-bind="click: setTime, text: (setTimeFetching() ? 'Saving' : (setTimeSuccess() ? 'Saved' : 'Join')), disable: setTimeFetching" type="submit" margin-top="200px">Add Name</button>
+            <button onClick="addQueue(myName.value, myTime.value)" data-bind="text: (setTimeFetching() ? 'Saving' : (setTimeSuccess() ? 'Saved' : 'Join')), disable: setTimeFetching" type="submit" margin-top="200px">Add Name</button>
             </div>
-          <div data-bind="visible: !status.isError()"
+
+            <script type= "text/javascript">
+              function addQueue(name, time){
+                const para = document.createElement("p");
+                para.innerHTML = name + time + " seconds";
+                document.getElementById("queueBox").appendChild(para);
+              };
+            </script>
+            <script>
+              function timeEnergy(energy, time){
+                if (time < energy/2.5){
+                  document.getElementById("myTime").value = energy/2.5;
+                }
+              };
+            </script>
+          <div data-bind="visible: !status.isError()" id="queueBox"
                class="box box-full left">
             <h2 class="left" style="width: 1000px">Current Queue</h2>
           </div>
