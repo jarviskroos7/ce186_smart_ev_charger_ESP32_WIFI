@@ -1852,7 +1852,7 @@
 
             <div data-bind="visible: !status.isError()" class="slidecontainer">
               <h3>Desired Time</h3>
-              <input type="range" style="width: 300px" min="1" max="100" value="50" id="myTime">
+              <input type="range" style="width: 300px" min="1" max="100" value="50" id="myTime" oninput="energyTime(myEnergy.value, this.value)">
             </div>
             <div>
               <pre style="width: 500px">1 s                              100 s</pre>
@@ -1864,21 +1864,22 @@
             <div>
               <pre style="width: 500px">2.5 Wh                             250 Wh</pre>
             </div>
-            <button onClick="addQueue(myName.value, myTime.value)" data-bind="text: (setTimeFetching() ? 'Saving' : (setTimeSuccess() ? 'Saved' : 'Join')), disable: setTimeFetching" type="submit" margin-top="200px">Add Name</button>
+            <button onClick="addQueue(myName.value, myTime.value)" type="submit" margin-top="200px">Add Name</button>
             </div>
 
             <script type= "text/javascript">
               function addQueue(name, time){
-                const para = document.createElement("p");
-                para.innerHTML = name + time + " seconds";
+                const para = document.createElement("pre");
+                para.innerHTML = name + "               " + time + " seconds";
                 document.getElementById("queueBox").appendChild(para);
               };
             </script>
             <script>
               function timeEnergy(energy, time){
-                if (time < energy/2.5){
-                  document.getElementById("myTime").value = energy/2.5;
-                }
+                document.getElementById("myTime").value = energy/2.5;
+              };
+              function energyTime(energy, time){
+                document.getElementById("myEnergy").value = time*2.5;
               };
             </script>
           <div data-bind="visible: !status.isError()" id="queueBox"
