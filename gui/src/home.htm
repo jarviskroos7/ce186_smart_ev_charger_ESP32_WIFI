@@ -574,6 +574,7 @@
           </div>
 
           <!-- Session Options -->
+          <!--
           <div class="box380 left" data-bind="visible: status.evse_connected">
             <h2>Charge Options</h2>
 
@@ -637,9 +638,10 @@
                                            !$root.status.isError(),
                                    click: stopDelayTimer">Cancel</button>
             </div>
-          </div>
+          </div>-->
 
           <!-- Energy -->
+          <!--
           <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
             <h2>Energy</h2>
             <table>
@@ -656,9 +658,10 @@
                 <td><span data-bind="text: scaleString(status.total_energy(), 1, 2)+ ' kWh'"></span></td>
               </tr>
             </table>
-          </div>
+          </div>-->
 
           <!-- Sensor Values -->
+          <!--
           <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
             <h2>Sensor Values</h2>
             <table>
@@ -695,9 +698,10 @@
                 <td><span data-bind="text: scaleString(status.temp4(), 10, 1) + ' &deg;C'"></span></td>
               </tr>
             </table>
-          </div>
+          </div>-->
 
           <!-- Settings -->
+          <!--
           <div class="box380 setup" data-bind="visible: status.evse_connected, css: { right: !advancedMode(), left: advancedMode() }">
             <h2>Setup</h2>
             <p data-bind="visible: !openevse.time.hasRTC()">
@@ -744,7 +748,7 @@
                                   disable: openEvseMaxCurrentSoft.fetching,
                                   css: { saved: openEvseMaxCurrentSoft.success }"></select>
             </p>
-          </div>
+          </div>-->
 
           <!-- Current -->
           <!--
@@ -975,8 +979,8 @@
                                   disable: displayGroup.fetching(),
                                   css: { saved: displayGroup.success }">
               </span>
-            </p>-->
-            <!--p>
+            </p>>
+            <p>
               <button data-bind="click: displayGroup.save,
                                  text: (displayGroup.fetching() ? 'Saving' :
                                        (displayGroup.success() ? 'Saved' : 'Save')),
@@ -1406,6 +1410,7 @@
           </div>
 
           <!-- Session Options -->
+          <!--
           <div class="box380 left" data-bind="visible: status.evse_connected">
             <h2>Charge Options</h2>
 
@@ -1469,9 +1474,10 @@
                                            !$root.status.isError(),
                                    click: stopDelayTimer">Cancel</button>
             </div>
-          </div>
+          </div>-->
 
           <!-- Energy -->
+          <!--
           <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
             <h2>Energy</h2>
             <table>
@@ -1488,9 +1494,10 @@
                 <td><span data-bind="text: scaleString(status.total_energy(), 1, 2)+ ' kWh'"></span></td>
               </tr>
             </table>
-          </div>
+          </div>-->
 
           <!-- Sensor Values -->
+          <!--
           <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
             <h2>Sensor Values</h2>
             <table>
@@ -1527,9 +1534,10 @@
                 <td><span data-bind="text: scaleString(status.temp4(), 10, 1) + ' &deg;C'"></span></td>
               </tr>
             </table>
-          </div>
+          </div>-->
 
           <!-- Settings -->
+          <!--
           <div class="box380 setup" data-bind="visible: status.evse_connected, css: { right: !advancedMode(), left: advancedMode() }">
             <h2>Setup</h2>
             <p data-bind="visible: !openevse.time.hasRTC()">
@@ -1576,7 +1584,7 @@
                                   disable: openEvseMaxCurrentSoft.fetching,
                                   css: { saved: openEvseMaxCurrentSoft.success }"></select>
             </p>
-          </div>
+          </div>-->
 
           <!-- Current -->
           <!--
@@ -1782,7 +1790,7 @@
               </label>
               <span data-bind="css: {selected: config.pause_uses_disabled }">Disable</span><br/>
             </div>
-          </div-->
+          </div>
 
           <div class="box380" data-bind="visible: status.evse_connected,
                                          css: { right: !advancedMode() &amp;&amp; !config.all_tests_enabled(),
@@ -1807,14 +1815,14 @@
                                   disable: displayGroup.fetching(),
                                   css: { saved: displayGroup.success }">
               </span>
-            </p>-->
+            </p>>
             <p>
               <button data-bind="click: displayGroup.save,
                                  text: (displayGroup.fetching() ? 'Saving' :
                                        (displayGroup.success() ? 'Saved' : 'Save')),
                                  disable: displayGroup.fetching">Save</button>
             </p>
-          </div>
+          </div-->
 
           <div class="box box-full left">
             <h2 class="left">History</h2>
