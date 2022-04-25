@@ -216,6 +216,7 @@
         <!--end content 1-->
 
         <!--TAB 2: Services -->
+        <!--
         <div id="content-2" data-bind="visible: isServices">
           <div class="box380 left">
             <h2>Energy Monitoring <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="emoncms.jpg" align="left" /></h2>
@@ -381,9 +382,10 @@
             <p>
               <button data-bind="click: saveOhmKey, text: (saveOhmKeyFetching() ? 'Saving' : (saveOhmKeySuccess() ? 'Saved' : 'Save')), disable: saveOhmKeyFetching">Save</button>
             </p>
-          </div>
+          </div>-->
 
           <!-- Divert Mode -->
+          <!--
           <div class="box380 right">
             <h2>Solar PV divert</h2>
 
@@ -506,7 +508,7 @@
               <span data-bind="visible: config.ocpp_enabled"><b>&nbsp; Connected:&nbsp;<span data-bind="text: 1 === status.ocpp_connected() ? 'Yes' : 'No'"></span></b></span>
             </p>
           </div>
-        </div>
+        </div>-->
         <!--end TAB 2-->
 
         <!--TAB 3: OpenEVSE -->
@@ -745,6 +747,7 @@
           </div>
 
           <!-- Current -->
+          <!--
           <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
             <h2>Current</h2>
             <table>
@@ -780,7 +783,7 @@
                 <td><span data-bind="text: config.offset"></span></td>
               </tr>
             </table>
-          </div>
+          </div>-->
 
           <!-- Safety -->
           <!--
@@ -882,6 +885,7 @@
           -->
 
           <!-- Hardware -->
+          <!--
           <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
             <h2>Hardware</h2>
             <table>
@@ -971,7 +975,7 @@
                                   disable: displayGroup.fetching(),
                                   css: { saved: displayGroup.success }">
               </span>
-            </p>
+            </p>-->
             <!--p>
               <button data-bind="click: displayGroup.save,
                                  text: (displayGroup.fetching() ? 'Saving' :
@@ -1014,6 +1018,7 @@
         <!--end tab 3-->
 
         <!--TAB 4: RAPI -->
+        <!--
         <div id="content-4" data-bind="visible: isRapi() &amp;&amp; status.evse_connected()">
           <div class="box box-full left">
             <form method='get' action='r' data-bind="with: rapi">
@@ -1164,17 +1169,18 @@
               </tr>
             </table>
           </div>
-        </div>
+        </div>-->
         <!--end TAB 4-->
 
         <!--TAB 5: Vehicle -->
+        <!--
         <div id="content-5" data-bind="visible: isVehicle">
           <div class="box380 left">
             <h2>Setup</h2>
             <select data-bind="value: vehicle.type">
               <option value="none">None</option>
               <option value="tesla">Tesla</option>
-              <!-- option value="ovms">OVMS</option -->
+              <option value="ovms">OVMS</option>
               <option value="mqtt">MQTT</option>
             </select>
 
@@ -1192,26 +1198,26 @@
               <p data-bind="visible: !vehicle.tesla.have_credentials() &amp;&amp; !vehicle.tesla.advanced()">
                 <b>Password:</b>
                 <input type="password" autocapitalize="none" data-bind="textInput: vehicle.tesla.password" /><br />
-                <!--span>
+                <span>
                   <input id="mqttPassword" type="checkbox" data-bind="checked: mqttPassword.show" />
                   <label for="mqttPassword">Show password</label>
-                </span-->
+                </span>
               </p>
               <p data-bind="visible: !vehicle.tesla.have_credentials() &amp;&amp; vehicle.tesla.advanced()">
                 <b>Access token</b>
                 <input data-bind="textInput: config.tesla_access_token" type="password" autocapitalize="none">
-                <!--span>
+                <span>
                   <input id="mqttPassword" type="checkbox" data-bind="checked: mqttPassword.show" />
                   <label for="mqttPassword">Show password</label>
-                </span-->
+                </span>
               </p>
               <p data-bind="visible: !vehicle.tesla.have_credentials() &amp;&amp; vehicle.tesla.advanced()">
                 <b>Refresh token</b>
                 <input data-bind="textInput: config.tesla_refresh_token" type="password" autocapitalize="none">
-                <!--span>
+                <span>
                   <input id="mqttPassword" type="checkbox" data-bind="checked: mqttPassword.show" />
                   <label for="mqttPassword">Show password</label>
-                </span-->
+                </span>
               </p>
               <div class="box" data-bind="visible: showTeslaAdvancedInfo()">
                 The Tesla login may break from time-to-time as Tesla change their login API, hopefully OpenEVSE will be able to resolve the
@@ -1334,7 +1340,7 @@
               </tr>
             </table>
           </div>
-        </div>
+        </div>-->
         <!--end TAB 5-->
 
         <!--TAB 6: Charger 2 -->
@@ -1573,6 +1579,7 @@
           </div>
 
           <!-- Current -->
+          <!--
           <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
             <h2>Current</h2>
             <table>
@@ -1608,7 +1615,7 @@
                 <td><span data-bind="text: config.offset"></span></td>
               </tr>
             </table>
-          </div>
+          </div>-->
 
           <!-- Safety -->
           <!--
@@ -1710,6 +1717,7 @@
           -->
 
           <!-- Hardware -->
+          <!--
           <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
             <h2>Hardware</h2>
             <table>
@@ -1799,7 +1807,7 @@
                                   disable: displayGroup.fetching(),
                                   css: { saved: displayGroup.success }">
               </span>
-            </p>
+            </p>-->
             <!--p>
               <button data-bind="click: displayGroup.save,
                                  text: (displayGroup.fetching() ? 'Saving' :
