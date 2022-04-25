@@ -12,7 +12,6 @@ public class Main {
     /***
      * Creates the queue and the chargers.
      * Should only be run once
-     * @throws Exception
      */
     public static void main() {
         Queue<User> q = new LinkedList<>();
@@ -41,9 +40,8 @@ public class Main {
      * Checks for available chargers and spots.
      * If there is, user is popped off queue and charging is started.
      * Charging timer for this user is created.
-     * @throws Exception
      */
-    public static void checkChargers() throws Exception {
+    public static void checkChargers() {
         if (!(q.isEmpty())) {
             for (Charger c : chargers) {
                 if (c.checkAvailability()) {
@@ -59,7 +57,7 @@ public class Main {
      * Charger and spot status must also be updated.
      * @param charger
      */
-    public static User startCharging(Charger charger) throws Exception {
+    public static User startCharging(Charger charger) {
         Spot spot = charger.availableSpot();
         User user = q.remove();
 
@@ -95,9 +93,8 @@ public class Main {
      * Note: This function loops back to checkChargers to ensure users can be popped off queue.
      * @param charger
      * @param spot
-     * @throws Exception
      */
-    public static void endCharging(Charger charger, Spot spot) throws Exception {
+    public static void endCharging(Charger charger, Spot spot) {
         charger.setState(ChargerState.INACTIVE);
         checkChargers();
         Timer delayTimer = new Timer();

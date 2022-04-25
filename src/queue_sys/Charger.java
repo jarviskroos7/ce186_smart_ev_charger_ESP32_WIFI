@@ -34,15 +34,12 @@ public class Charger {
     /***
      * Return the first available spot for this charger.
      * @return Spot
-     * @throws Exception
      */
-    public Spot availableSpot() throws Exception {
+    public Spot availableSpot(){
         if (leftSpot.isAvailable()){
             return this.leftSpot;
-        } else if (rightSpot.isAvailable()){
-            return this.rightSpot;
         } else {
-            throw new Exception("neither spot available");
+            return this.rightSpot;
         }
     }
 
