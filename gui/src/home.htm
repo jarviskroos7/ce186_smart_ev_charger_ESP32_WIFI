@@ -23,7 +23,7 @@
 <body>
   <div id="page">
     <div class="header">
-      <h1>Data <span>EVSE</span></h1>
+      <h1>Data<span>EVSE</span></h1>
       <h3>CE186</h3>
     </div>
 
@@ -42,6 +42,7 @@
         <label for="tab-6">Charger 2</label>
         <input id="tab-1" type="radio" name="tab-group" data-bind="checked: tab" value="system" />
         <label for="tab-1">System</label>
+
         <!--input id="tab-2" type="radio" name="tab-group" data-bind="checked: tab" value="services" />
         <label for="tab-2">Services</label>
         <input id="tab-4" type="radio" name="tab-group" data-bind="checked: tab" value="rapi" />
@@ -51,7 +52,7 @@
       </div>
 
       <div id="content">
-        <!--TAB 1: System -->
+        <!--TAB 1: System Tab -->
         <div id="content-1" data-bind="visible: isSystem">
           <div class="box380 left">
             <h2>WiFi Setup</h2>
@@ -936,7 +937,7 @@
                 </td>
               </tr>
             </table>
-          </div>
+          </div> -->
 
           <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
             <h2>Vehicle Settings</h2>
@@ -1173,10 +1174,12 @@
               </tr>
             </table>
           </div>
+
         </div>-->
         <!--end TAB 4-->
 
         <!--TAB 5: Vehicle -->
+
         <!--
         <div id="content-5" data-bind="visible: isVehicle">
           <div class="box380 left">
@@ -1345,6 +1348,7 @@
             </table>
           </div>
         </div>-->
+
         <!--end TAB 5-->
 
         <!--TAB 6: Charger 2 -->
@@ -1794,7 +1798,7 @@
 
           <div class="box380" data-bind="visible: status.evse_connected,
                                          css: { right: !advancedMode() &amp;&amp; !config.all_tests_enabled(),
-                                                left: advancedMode() || config.all_tests_enabled() }">
+                                                left: advancedMode() || config.all_tests_enabled() }">-->
             <h2>Display</h2>
             <div>
               <span data-bind="css: {selected: !advancedMode() }">Simple</span>
@@ -1879,6 +1883,10 @@
             </div>
             <div>
               <pre style="width: 500px">2.5 Wh                             250 Wh</pre>
+
+              <text style="width: 200px">1 kWh</text>
+              <text style="width: 200px">3 kWh</text>
+
             </div>
             <button onClick="addQueue(myName.value, myTime.value)" type="submit" margin-top="200px">Add Name</button>
             </div>
@@ -1925,5 +1933,4 @@
   <script src="lib.js"></script>
   <script src="home.js"></script>
 </body>
-
 </html>
