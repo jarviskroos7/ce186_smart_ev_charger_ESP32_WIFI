@@ -42,12 +42,12 @@
         <label for="tab-6">Charger 2</label>
         <input id="tab-1" type="radio" name="tab-group" data-bind="checked: tab" value="system" />
         <label for="tab-1">System</label>
-        <input id="tab-2" type="radio" name="tab-group" data-bind="checked: tab" value="services" />
+        <!--input id="tab-2" type="radio" name="tab-group" data-bind="checked: tab" value="services" />
         <label for="tab-2">Services</label>
         <input id="tab-4" type="radio" name="tab-group" data-bind="checked: tab" value="rapi" />
         <label for="tab-4" data-bind="visible: developerMode() &amp;&amp; status.evse_connected()">RAPI</label>
         <input id="tab-5" type="radio" name="tab-group" data-bind="checked: tab" value="vehicle" />
-        <label for="tab-5">Vehicle</label>
+        <label for="tab-5">Vehicle</label-->
       </div>
 
       <div id="content">
@@ -981,8 +981,8 @@
                                  text: (displayGroup.fetching() ? 'Saving' :
                                        (displayGroup.success() ? 'Saved' : 'Save')),
                                  disable: displayGroup.fetching">Save</button>
-            </p-->
-          </div>
+            </p>
+          </div-->
 
           <div class="box box-full left">
             <h2 class="left">History</h2>
@@ -1782,7 +1782,7 @@
               </label>
               <span data-bind="css: {selected: config.pause_uses_disabled }">Disable</span><br/>
             </div>
-          </div>
+          </div-->
 
           <div class="box380" data-bind="visible: status.evse_connected,
                                          css: { right: !advancedMode() &amp;&amp; !config.all_tests_enabled(),
@@ -1808,12 +1808,12 @@
                                   css: { saved: displayGroup.success }">
               </span>
             </p>-->
-            <!--p>
+            <p>
               <button data-bind="click: displayGroup.save,
                                  text: (displayGroup.fetching() ? 'Saving' :
                                        (displayGroup.success() ? 'Saved' : 'Save')),
                                  disable: displayGroup.fetching">Save</button>
-            </p-->
+            </p>
           </div>
 
           <div class="box box-full left">
