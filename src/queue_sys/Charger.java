@@ -4,7 +4,6 @@ public class Charger {
 
     public Charger(){
         this.state = ChargerState.INACTIVE;
-        this.time = 0;
         this.leftSpot = new Spot(this);
         this.rightSpot = new Spot(this);
 
