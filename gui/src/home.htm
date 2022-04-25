@@ -42,12 +42,13 @@
         <label for="tab-6">Charger 2</label>
         <input id="tab-1" type="radio" name="tab-group" data-bind="checked: tab" value="system" />
         <label for="tab-1">System</label>
-        <!--<input id="tab-2" type="radio" name="tab-group" data-bind="checked: tab" value="services" />
+
+        <!--input id="tab-2" type="radio" name="tab-group" data-bind="checked: tab" value="services" />
         <label for="tab-2">Services</label>
         <input id="tab-4" type="radio" name="tab-group" data-bind="checked: tab" value="rapi" />
         <label for="tab-4" data-bind="visible: developerMode() &amp;&amp; status.evse_connected()">RAPI</label>
         <input id="tab-5" type="radio" name="tab-group" data-bind="checked: tab" value="vehicle" />
-        <label for="tab-5">Vehicle</label>-->
+        <label for="tab-5">Vehicle</label-->
       </div>
 
       <div id="content">
@@ -382,7 +383,7 @@
             <p>
               <button data-bind="click: saveOhmKey, text: (saveOhmKeyFetching() ? 'Saving' : (saveOhmKeySuccess() ? 'Saved' : 'Save')), disable: saveOhmKeyFetching">Save</button>
             </p>
-          </div> -->
+          </div>-->
 
           <!-- Divert Mode -->
           <!--
@@ -574,6 +575,7 @@
           </div>
 
           <!-- Session Options -->
+          <!--
           <div class="box380 left" data-bind="visible: status.evse_connected">
             <h2>Charge Options</h2>
 
@@ -637,9 +639,10 @@
                                            !$root.status.isError(),
                                    click: stopDelayTimer">Cancel</button>
             </div>
-          </div>
+          </div>-->
 
           <!-- Energy -->
+          <!--
           <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
             <h2>Energy</h2>
             <table>
@@ -656,9 +659,10 @@
                 <td><span data-bind="text: scaleString(status.total_energy(), 1, 2)+ ' kWh'"></span></td>
               </tr>
             </table>
-          </div>
+          </div>-->
 
           <!-- Sensor Values -->
+          <!--
           <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
             <h2>Sensor Values</h2>
             <table>
@@ -695,9 +699,10 @@
                 <td><span data-bind="text: scaleString(status.temp4(), 10, 1) + ' &deg;C'"></span></td>
               </tr>
             </table>
-          </div>
+          </div>-->
 
           <!-- Settings -->
+          <!--
           <div class="box380 setup" data-bind="visible: status.evse_connected, css: { right: !advancedMode(), left: advancedMode() }">
             <h2>Setup</h2>
             <p data-bind="visible: !openevse.time.hasRTC()">
@@ -744,7 +749,7 @@
                                   disable: openEvseMaxCurrentSoft.fetching,
                                   css: { saved: openEvseMaxCurrentSoft.success }"></select>
             </p>
-          </div>
+          </div>-->
 
           <!-- Current -->
           <!--
@@ -783,7 +788,7 @@
                 <td><span data-bind="text: config.offset"></span></td>
               </tr>
             </table>
-          </div> -->
+          </div>-->
 
           <!-- Safety -->
           <!--
@@ -975,14 +980,14 @@
                                   disable: displayGroup.fetching(),
                                   css: { saved: displayGroup.success }">
               </span>
-            </p>
-            <!--p>
+            </p>>
+            <p>
               <button data-bind="click: displayGroup.save,
                                  text: (displayGroup.fetching() ? 'Saving' :
                                        (displayGroup.success() ? 'Saved' : 'Save')),
                                  disable: displayGroup.fetching">Save</button>
-            </p-->
-          </div>
+            </p>
+          </div-->
 
           <div class="box box-full left">
             <h2 class="left">History</h2>
@@ -1169,10 +1174,12 @@
               </tr>
             </table>
           </div>
-        </div> -->
+
+        </div>-->
         <!--end TAB 4-->
 
-        <!--TAB 5: Vehicle --> 
+        <!--TAB 5: Vehicle -->
+
         <!--
         <div id="content-5" data-bind="visible: isVehicle">
           <div class="box380 left">
@@ -1180,7 +1187,7 @@
             <select data-bind="value: vehicle.type">
               <option value="none">None</option>
               <option value="tesla">Tesla</option>
-              
+              <option value="ovms">OVMS</option>
               <option value="mqtt">MQTT</option>
             </select>
 
@@ -1340,7 +1347,8 @@
               </tr>
             </table>
           </div>
-        </div> -->
+        </div>-->
+
         <!--end TAB 5-->
 
         <!--TAB 6: Charger 2 -->
@@ -1406,6 +1414,7 @@
           </div>
 
           <!-- Session Options -->
+          <!--
           <div class="box380 left" data-bind="visible: status.evse_connected">
             <h2>Charge Options</h2>
 
@@ -1469,9 +1478,10 @@
                                            !$root.status.isError(),
                                    click: stopDelayTimer">Cancel</button>
             </div>
-          </div>
+          </div>-->
 
           <!-- Energy -->
+          <!--
           <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
             <h2>Energy</h2>
             <table>
@@ -1488,9 +1498,10 @@
                 <td><span data-bind="text: scaleString(status.total_energy(), 1, 2)+ ' kWh'"></span></td>
               </tr>
             </table>
-          </div>
+          </div>-->
 
           <!-- Sensor Values -->
+          <!--
           <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
             <h2>Sensor Values</h2>
             <table>
@@ -1527,9 +1538,10 @@
                 <td><span data-bind="text: scaleString(status.temp4(), 10, 1) + ' &deg;C'"></span></td>
               </tr>
             </table>
-          </div>
+          </div>-->
 
           <!-- Settings -->
+          <!--
           <div class="box380 setup" data-bind="visible: status.evse_connected, css: { right: !advancedMode(), left: advancedMode() }">
             <h2>Setup</h2>
             <p data-bind="visible: !openevse.time.hasRTC()">
@@ -1576,7 +1588,7 @@
                                   disable: openEvseMaxCurrentSoft.fetching,
                                   css: { saved: openEvseMaxCurrentSoft.success }"></select>
             </p>
-          </div>
+          </div>-->
 
           <!-- Current -->
           <!--
@@ -1616,6 +1628,7 @@
               </tr>
             </table>
           </div>-->
+
           <!-- Safety -->
           <!--
           <div class="box380 left" data-bind="visible: status.evse_connected() &amp;&amp; (advancedMode() || !config.all_tests_enabled())">
@@ -1806,14 +1819,14 @@
                                   disable: displayGroup.fetching(),
                                   css: { saved: displayGroup.success }">
               </span>
-            </p>
-            <!--p>
+            </p>>
+            <p>
               <button data-bind="click: displayGroup.save,
                                  text: (displayGroup.fetching() ? 'Saving' :
                                        (displayGroup.success() ? 'Saved' : 'Save')),
                                  disable: displayGroup.fetching">Save</button>
-            </p-->
-          </div>
+            </p>
+          </div-->
 
           <div class="box box-full left">
             <h2 class="left">History</h2>
@@ -1851,32 +1864,49 @@
         <div id="content-6" data-bind="visible: isQueue">
           <div data-bind="visible: !status.isError()"
                class="box box-full left">
-            <h2 class="left" style="width: 1000px">Join Queue</h2>
+            <h2 class="left" style="width: 1000px" id="queueHead">Join Queue</h2>
             <div data-bind="visible: !status.isError()">
               <h3>Name</h3>
-              <input type="text" style="width: 300px">
+              <input type="text" style="width: 300px" id="myName">
             </div>
 
             <div data-bind="visible: !status.isError()" class="slidecontainer">
               <h3>Desired Time</h3>
-              <input type="range" style="width: 300px" min="1" max="100" value="50" id="myRange">
+              <input type="range" style="width: 300px" min="1" max="100" value="50" id="myTime" oninput="energyTime(myEnergy.value, this.value)">
             </div>
             <div>
               <pre style="width: 500px">1 s                              100 s</pre>
             </div>
             <div class="slidecontainer">
               <h3>Desired Energy</h3>
-              <input type="range" style="width: 300px" min="1" max="100" value="50" id="myRange">
+              <input type="range" style="width: 300px" min="2.5" max="250" value="myTime.value" id="myEnergy" oninput="timeEnergy(this.value, myTime.value)">
             </div>
             <div>
+              <pre style="width: 500px">2.5 Wh                             250 Wh</pre>
+
               <text style="width: 200px">1 kWh</text>
               <text style="width: 200px">3 kWh</text>
 
-              <pre style="width: 500px">2.5 Wh                                250 Wh</pre>
             </div>
-            <button data-bind="click: setTime, text: (setTimeFetching() ? 'Saving' : (setTimeSuccess() ? 'Saved' : 'Join')), disable: setTimeFetching" type="submit" margin-top="200px">Add Name</button>
-          </div>
-          <div data-bind="visible: !status.isError()"
+            <button onClick="addQueue(myName.value, myTime.value)" type="submit" margin-top="200px">Add Name</button>
+            </div>
+
+            <script type= "text/javascript">
+              function addQueue(name, time){
+                const para = document.createElement("pre");
+                para.innerHTML = name + "               " + time + " seconds";
+                document.getElementById("queueBox").appendChild(para);
+              };
+            </script>
+            <script>
+              function timeEnergy(energy, time){
+                document.getElementById("myTime").value = energy/2.5;
+              };
+              function energyTime(energy, time){
+                document.getElementById("myEnergy").value = time*2.5;
+              };
+            </script>
+          <div data-bind="visible: !status.isError()" id="queueBox"
                class="box box-full left">
             <h2 class="left" style="width: 1000px">Current Queue</h2>
           </div>
