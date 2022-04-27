@@ -4,6 +4,7 @@ public class Charger {
 
     public Charger(){
         this.state = ChargerState.INACTIVE;
+        this.time = 0;
         this.leftSpot = new Spot(this);
         this.rightSpot = new Spot(this);
 
@@ -34,12 +35,15 @@ public class Charger {
     /***
      * Return the first available spot for this charger.
      * @return Spot
+     * @throws Exception
      */
-    public Spot availableSpot(){
+    public Spot availableSpot() throws Exception {
         if (leftSpot.isAvailable()){
             return this.leftSpot;
-        } else {
+        } else if (rightSpot.isAvailable()){
             return this.rightSpot;
+        } else {
+            throw new Exception("neither spot available");
         }
     }
 
@@ -59,12 +63,6 @@ public class Charger {
         return rightSpot;
     }
 
-    /***
-     * state - whether the charger is available.
-     * time - time until the charger is available again.
-     * leftSpot - left parking spot for this charger
-     * rightSpot - right parking spot for this charger
-     */
     private ChargerState state;
     private int time;
     private Spot leftSpot;
