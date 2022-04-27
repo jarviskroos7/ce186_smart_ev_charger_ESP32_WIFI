@@ -40,9 +40,9 @@
         <label for="tab-3">Charger 1</label>
         <input id="tab-6" type="radio" name="tab-group" data-bind="checked: tab" value="charger2" />
         <label for="tab-6">Charger 2</label>
-        <input id="tab-1" type="radio" name="tab-group" data-bind="checked: tab" value="system" />
+        <!--input id="tab-1" type="radio" name="tab-group" data-bind="checked: tab" value="system" />
         <label for="tab-1">System</label>
-        <!--<input id="tab-2" type="radio" name="tab-group" data-bind="checked: tab" value="services"/>
+        <input id="tab-2" type="radio" name="tab-group" data-bind="checked: tab" value="services"/>
         <label for="tab-2">Services</label>
         <input id="tab-4" type="radio" name="tab-group" data-bind="checked: tab" value="rapi" />
         <label for="tab-4" data-bind="visible: developerMode() &amp;&amp; status.evse_connected()">RAPI</label>
@@ -574,6 +574,7 @@
           </div>
 
           <!-- Session Options -->
+          <!--
           <div class="box380 left" data-bind="visible: status.evse_connected">
             <h2>Charge Options</h2>
 
@@ -637,10 +638,10 @@
                                            !$root.status.isError(),
                                    click: stopDelayTimer">Cancel</button>
             </div>
-          </div>
+          </div-->
 
           <!-- Energy -->
-          <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
+          <!--div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
             <h2>Energy</h2>
             <table>
               <tr>
@@ -656,10 +657,10 @@
                 <td><span data-bind="text: scaleString(status.total_energy(), 1, 2)+ ' kWh'"></span></td>
               </tr>
             </table>
-          </div>
+          </div-->
 
           <!-- Sensor Values -->
-          <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
+          <!--div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
             <h2>Sensor Values</h2>
             <table>
               <tr>
@@ -695,10 +696,10 @@
                 <td><span data-bind="text: scaleString(status.temp4(), 10, 1) + ' &deg;C'"></span></td>
               </tr>
             </table>
-          </div>
+          </div-->
 
           <!-- Settings -->
-          <div class="box380 setup" data-bind="visible: status.evse_connected, css: { right: !advancedMode(), left: advancedMode() }">
+          <!--div class="box380 setup" data-bind="visible: status.evse_connected, css: { right: !advancedMode(), left: advancedMode() }">
             <h2>Setup</h2>
             <p data-bind="visible: !openevse.time.hasRTC()">
               <b>Time: No RTC detected</b>
@@ -744,7 +745,7 @@
                                   disable: openEvseMaxCurrentSoft.fetching,
                                   css: { saved: openEvseMaxCurrentSoft.success }"></select>
             </p>
-          </div>
+          </div-->
 
           <!-- Current -->
           <!--
@@ -976,13 +977,13 @@
                                   css: { saved: displayGroup.success }">
               </span>
             </p>
-            <!--p>
+            <p>
               <button data-bind="click: displayGroup.save,
                                  text: (displayGroup.fetching() ? 'Saving' :
                                        (displayGroup.success() ? 'Saved' : 'Save')),
                                  disable: displayGroup.fetching">Save</button>
-            </p-->
-          </div>
+            </p>
+          </div-->
 
           <div class="box box-full left">
             <h2 class="left">History</h2>
@@ -1409,7 +1410,7 @@
           </div>
 
           <!-- Session Options -->
-          <div class="box380 left" data-bind="visible: status.evse_connected">
+          <!--div class="box380 left" data-bind="visible: status.evse_connected">
             <h2>Charge Options</h2>
 
             <div data-bind="visible: isEcoModeAvailable">
@@ -1472,10 +1473,10 @@
                                            !$root.status.isError(),
                                    click: stopDelayTimer">Cancel</button>
             </div>
-          </div>
+          </div-->
 
           <!-- Energy -->
-          <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
+          <!--div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
             <h2>Energy</h2>
             <table>
               <tr>
@@ -1491,10 +1492,10 @@
                 <td><span data-bind="text: scaleString(status.total_energy(), 1, 2)+ ' kWh'"></span></td>
               </tr>
             </table>
-          </div>
+          </div-->
 
           <!-- Sensor Values -->
-          <div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
+          <!--div class="box380 right" data-bind="visible: advancedMode() &amp;&amp; status.evse_connected()">
             <h2>Sensor Values</h2>
             <table>
               <tr>
@@ -1530,10 +1531,10 @@
                 <td><span data-bind="text: scaleString(status.temp4(), 10, 1) + ' &deg;C'"></span></td>
               </tr>
             </table>
-          </div>
+          </div-->
 
           <!-- Settings -->
-          <div class="box380 setup" data-bind="visible: status.evse_connected, css: { right: !advancedMode(), left: advancedMode() }">
+          <!--div class="box380 setup" data-bind="visible: status.evse_connected, css: { right: !advancedMode(), left: advancedMode() }">
             <h2>Setup</h2>
             <p data-bind="visible: !openevse.time.hasRTC()">
               <b>Time: No RTC detected</b>
@@ -1579,7 +1580,7 @@
                                   disable: openEvseMaxCurrentSoft.fetching,
                                   css: { saved: openEvseMaxCurrentSoft.success }"></select>
             </p>
-          </div>
+          </div-->
 
           <!-- Current -->
           <!--
@@ -1810,13 +1811,13 @@
                                   css: { saved: displayGroup.success }">
               </span>
             </p>
-            <!--p>
+            <p>
               <button data-bind="click: displayGroup.save,
                                  text: (displayGroup.fetching() ? 'Saving' :
                                        (displayGroup.success() ? 'Saved' : 'Save')),
                                  disable: displayGroup.fetching">Save</button>
-            </p-->
-          </div>
+            </p>
+          </div-->
 
           <div class="box box-full left">
             <h2 class="left">History</h2>
