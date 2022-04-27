@@ -40,9 +40,9 @@
         <label for="tab-3">Charger 1</label>
         <input id="tab-6" type="radio" name="tab-group" data-bind="checked: tab" value="charger2" />
         <label for="tab-6">Charger 2</label>
-        <input id="tab-1" type="radio" name="tab-group" data-bind="checked: tab" value="system" />
+        <!--input id="tab-1" type="radio" name="tab-group" data-bind="checked: tab" value="system" />
         <label for="tab-1">System</label>
-        <!--input id="tab-2" type="radio" name="tab-group" data-bind="checked: tab" value="services" />
+        <input id="tab-2" type="radio" name="tab-group" data-bind="checked: tab" value="services" />
         <label for="tab-2">Services</label>
         <input id="tab-4" type="radio" name="tab-group" data-bind="checked: tab" value="rapi" />
         <label for="tab-4" data-bind="visible: developerMode() &amp;&amp; status.evse_connected()">RAPI</label>
@@ -537,12 +537,14 @@
 
             <table>
               <tr>
+                <th>User</th>
                 <th>Current</th>
                 <th>Energy</th>
                 <th>Temp</th>
                 <th>Elapsed</th>
               </tr>
               <tr>
+                <td><span data-bind="text: myName.value"></span></td>
                 <td><span data-bind="text: scaleString(status.amp(), 1000, 2) + ' A'"></span></td>
                 <td><span data-bind="text: scaleString(status.session_energy(), 1000, 2) + ' kWh'"></span></td>
                 <td><span data-bind="text: scaleString(status.temp(), 10, 1) + ' &deg;C'"></span></td>
@@ -994,8 +996,8 @@
             <table>
               <thead>
                 <tr>
+                  <th>User</th>
                   <th>Time</th>
-                  <th>Type</th>
                   <th>Status</th>
                   <th>Energy</th>
                   <th>Temp</th>
@@ -1003,8 +1005,8 @@
               </thead>
               <tbody data-bind="foreach: logs.events">
                 <tr>
+                  <td><span data-bind="text: myName.value"></span></td>
                   <td><span data-bind="text: localTime"></span></td>
-                  <td><span data-bind="text: type"></span></td>
                   <td><span data-bind="text: estate"></span></td>
                   <td><span data-bind="text: scaleString(energy(), 1000, 2) + ' kWh'"></span></td>
                   <td><span data-bind="text: scaleString(temperatureMax(), 1, 1) + ' &deg;C'"></span></td>
@@ -1832,8 +1834,8 @@
             <table>
               <thead>
                 <tr>
+                  <th>User</th>
                   <th>Time</th>
-                  <th>Type</th>
                   <th>Status</th>
                   <th>Energy</th>
                   <th>Temp</th>
@@ -1841,8 +1843,8 @@
               </thead>
               <tbody data-bind="foreach: logs.events">
                 <tr>
+                  <td><span data-bind="text: myName.value"></span></td>
                   <td><span data-bind="text: localTime"></span></td>
-                  <td><span data-bind="text: type"></span></td>
                   <td><span data-bind="text: estate"></span></td>
                   <td><span data-bind="text: scaleString(energy(), 1000, 2) + ' kWh'"></span></td>
                   <td><span data-bind="text: scaleString(temperatureMax(), 1, 1) + ' &deg;C'"></span></td>
