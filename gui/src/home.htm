@@ -1373,12 +1373,14 @@
 
             <table>
               <tr>
+                <th>User</th>
                 <th>Current</th>
                 <th>Energy</th>
                 <th>Temp</th>
                 <th>Elapsed</th>
               </tr>
               <tr>
+                <td><span data-bind="text: myName.value"></span></td>
                 <td><span data-bind="text: scaleString(status.amp(), 1000, 2) + ' A'"></span></td>
                 <td><span data-bind="text: scaleString(status.session_energy(), 1000, 2) + ' kWh'"></span></td>
                 <td><span data-bind="text: scaleString(status.temp(), 10, 1) + ' &deg;C'"></span></td>
@@ -1880,14 +1882,41 @@
             <div>
               <pre style="width: 500px">2.5 Wh                             250 Wh</pre>
             </div>
-            <button onClick="addQueue(myName.value, myTime.value)" type="submit" margin-top="200px">Add Name</button>
+            <button onClick="addQueue(myName.value, myTime.value, myEnergy.value)" type="submit" margin-top="200px">Add Name</button>
             </div>
 
             <script type= "text/javascript">
-              function addQueue(name, time){
-                const para = document.createElement("pre");
-                para.innerHTML = name + "               " + time + " seconds";
-                document.getElementById("queueBox").appendChild(para);
+
+              function getUser(){
+                return document.getElementById("myName");
+              };
+              function getUser2(){
+                return document.getElementById("myName");
+              };
+              function addQueue(name, time, energy){
+
+                const row = document.createElement("tr");
+                const nameCell = document.createElement("td");
+                const timeCell = document.createElement("td");
+                const energyCell = document.createElement("td");
+                const ETACell = document.createElement("td");
+                const nameData = document.createElement("pre");
+                const timeData = document.createElement("pre");
+                const energyData = document.createElement("pre");
+                const ETAData = document.createElement("pre");
+                nameData.innerHTML = document.getElementById("myName").value;
+                timeData.innerHTML = document.getElementById("myTime").value + " seconds";
+                energyData.innerHTML = document.getElementById("myEnergy").value + " Wh";
+                ETAData.innerHTML = document.getElementById("myTime").value + " seconds";
+                nameCell.appendChild(nameData);
+                timeCell.appendChild(timeData);
+                energyCell.appendChild(energyData);
+                ETACell.appendChild(ETAData);
+                row.appendChild(nameCell);
+                row.appendChild(energyCell);
+                row.appendChild(timeCell);
+                row.appendChild(ETACell);
+                document.getElementById("queueTable").appendChild(row);
               };
             </script>
             <script>
@@ -1901,6 +1930,14 @@
           <div data-bind="visible: !status.isError()" id="queueBox"
                class="box box-full left">
             <h2 class="left" style="width: 1000px">Current Queue</h2>
+            <table id="queueTable">
+              <tr>
+                <th>User</th>
+                <th>Energy Requested</th>
+                <th>Time Requested</th>
+                <th>Estimated Wait Time</th>
+              </tr>
+            </table>
           </div>
 
         </div>
