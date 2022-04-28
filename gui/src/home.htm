@@ -1897,7 +1897,8 @@
                 var eta = 0;
                 var table = document.getElementById("queueTable")
                 if (!!document.getElementById("initialETA")) {
-                  eta = parseFloat(table.rows.item(table.rows.length - 1).cells.item(3).textContent) + parseFloat(document.getElementById("myTime").value);
+                  prevTime = table.rows.item(table.rows.length - 1).cells.item(3).textContent
+                  eta = parseFloat(prevTime.slice(0, parseFloat(prevTime) - 7)) + parseFloat(document.getElementById("myTime").value);
                 } else {
                   eta = document.getElementById("myTime").value;
                 };
@@ -1948,12 +1949,10 @@
                     minutes = (diff / 60) | 0;
                     seconds = (diff % 60) | 0;
 
-                    display.textContent = 60*minutes + seconds;
+                    display.textContent = 60 * minutes + seconds + " seconds";
 
-                    if (diff <= 0) {
-                        // add one second so that the count down starts at the full duration
-                        // example 05:00 not 04:59
-                        start = Date.now() + 1000;
+                    if (seconds == 0 && minutes == 0){
+                      document.getElementById("queueTable").deleteRow(1);
                     }
                 };
                         // we don't want to wait a full second before the timer starts
