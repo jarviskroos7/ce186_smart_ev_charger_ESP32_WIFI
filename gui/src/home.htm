@@ -1894,7 +1894,13 @@
                 return document.getElementById("myName");
               };
               function addQueue(name, time, energy){
-
+                var eta = 0;
+                var table = document.getElementById("queueTable")
+                if (!!document.getElementById("initialETA")) {
+                  eta = parseFloat(table.rows.item(table.rows.length - 1).cells.item(3).textContent) + parseFloat(document.getElementById("myTime").value);
+                } else {
+                  eta = document.getElementById("myTime").value;
+                };
                 const row = document.createElement("tr");
                 const nameCell = document.createElement("td");
                 const timeCell = document.createElement("td");
@@ -1904,10 +1910,12 @@
                 const timeData = document.createElement("pre");
                 const energyData = document.createElement("pre");
                 const ETAData = document.createElement("pre");
+                ETAData.setAttribute("id", "initialETA")
+                ETAData.setAttribute("value", eta.toString() )
                 nameData.innerHTML = document.getElementById("myName").value;
                 timeData.innerHTML = document.getElementById("myTime").value + " seconds";
                 energyData.innerHTML = document.getElementById("myEnergy").value + " Wh";
-                ETAData.innerHTML = document.getElementById("myTime").value + " seconds";
+                startTimer(eta, ETAData)
                 nameCell.appendChild(nameData);
                 timeCell.appendChild(timeData);
                 energyCell.appendChild(energyData);
@@ -1926,6 +1934,32 @@
               function energyTime(energy, time){
                 document.getElementById("myEnergy").value = time*2.5;
               };
+              function startTimer(duration, display) {
+                var start = Date.now(),
+                    diff,
+                    minutes,
+                    seconds;
+                function timer() {
+                    // get the number of seconds that have elapsed since
+                    // startTimer() was called
+                    diff = duration - (((Date.now() - start) / 1000) | 0);
+
+                    // does the same job as parseInt truncates the float
+                    minutes = (diff / 60) | 0;
+                    seconds = (diff % 60) | 0;
+
+                    display.textContent = 60*minutes + seconds;
+
+                    if (diff <= 0) {
+                        // add one second so that the count down starts at the full duration
+                        // example 05:00 not 04:59
+                        start = Date.now() + 1000;
+                    }
+                };
+                        // we don't want to wait a full second before the timer starts
+                timer();
+                setInterval(timer, 1000);
+          }
             </script>
           <div data-bind="visible: !status.isError()" id="queueBox"
                class="box box-full left">
