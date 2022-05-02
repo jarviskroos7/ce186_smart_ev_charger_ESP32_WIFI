@@ -1959,7 +1959,24 @@
                     display.textContent = 60 * minutes + seconds + " seconds";
 
                     if (seconds == 0 && minutes == 0){
-                      document.getElementById("queueTable").deleteRow(1);
+                      var table1 = document.getElementById("queueTable")
+                      var table2 =document.getElementById("queueTable2")
+                      if (table1.rows.length == 1) {
+                        table2.deleteRow(1)
+                      }
+                      else if (table2.rows.length == 1) {
+                        table1.deleteRow(1)
+                      }
+                      else{
+                        var time1 = table1.rows.item(1).cells.item(3).textContent
+                        var time2 = table2.rows.item(1).cells.item(3).textContent
+                        if (time1 < time2) {
+                          table1.deleteRow(1);
+                        }
+                        else {
+                          table2.deleteRow(1)
+                        }
+                      }
                     }
                 };
                         // we don't want to wait a full second before the timer starts
