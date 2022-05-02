@@ -544,11 +544,11 @@
                 <th>Time Remaining</th>
               </tr>
               <tr>
-                <td id="charger1User"></td>
+                <td><span data-bind="text: 'none'"></span></td>
                 <td><span data-bind="text: scaleString(status.amp(), 1000, 2) + ' A'"></span></td>
                 <td><span data-bind="text: scaleString(status.session_energy(), 1000, 2) + ' kWh'"></span></td>
                 <td><span data-bind="text: scaleString(status.temp(), 10, 1) + ' &deg;C'"></span></td>
-                <td><span data-bind="text: openevse.time.elapsed"></span></td>
+                <td><span data-bind="text: queueTable.rows.item(0).cells.item(3).textContent"></span></td>
               </tr>
             </table>
 
@@ -1378,7 +1378,7 @@
                 <th>Time Remaining</th>
               </tr>
               <tr>
-                <td><span data-bind="text: myName.value"></span></td>
+                <td><span data-bind="text: 'none'"></span></td>
                 <td><span data-bind="text: scaleString(status.amp(), 1000, 2) + ' A'"></span></td>
                 <td><span data-bind="text: scaleString(status.session_energy(), 1000, 2) + ' kWh'"></span></td>
                 <td><span data-bind="text: scaleString(status.temp(), 10, 1) + ' &deg;C'"></span></td>
@@ -1890,18 +1890,31 @@
               function addQueue(name, time, energy){
                 var table1 = document.getElementById("queueTable")
                 var table2 = document.getElementById("queueTable2")
+                var charger1 = document.getElementById("charger1Table")
+                var charger2 = document.getElementById("charger2Table")
+                var charger = charger1
                 var table = table1
                 if (table1.rows.length == 1) {
                   table = table1
+                  charger = charger1
                 }
                 else if (table2.rows.length == 1) {
                   table = table2
-                }
-                else if (table1.rows.item(table1.rows.length - 1).cells.item(3).textContent < table2.rows.item(table2.rows.length - 1).cells.item(3).textContent){
-                  table = table1
+                  charger = charger2
                 }
                 else {
-                  table = table2
+                  var prevTime1 = table1.rows.item(table1.rows.length - 1).cells.item(3).textContent
+                  var prevTime2 = table2.rows.item(table2.rows.length - 1).cells.item(3).textContent
+                  prevTime1 = parseFloat(prevTime1.slice(0, prevTime1.length - 7))
+                  prevTime2 = parseFloat(prevTime2.slice(0, prevTime2.length - 7))
+                  if (prevTime1 < prevTime2){
+                    table = table1
+                    charger = charger1
+                  }
+                  else {
+                    table = table2
+                    charger = charger2
+                  }
                 }
                 if (table.rows.length != 1) {
                   prevTime = table.rows.item(table.rows.length - 1).cells.item(3).textContent
@@ -1933,6 +1946,8 @@
                 row.appendChild(timeCell);
                 row.appendChild(ETACell);
                 table.appendChild(row);
+                charger.rows.item(1).cells.item(0).textContent = table.rows.item(1).cells.item(0).textContent
+                charger.rows.item(1).cells.item(4).textContent = table.rows.item(1).cells.item(2).textContent
               };
             </script>
             <script>
@@ -1961,20 +1976,30 @@
                     if (seconds == 0 && minutes == 0){
                       var table1 = document.getElementById("queueTable")
                       var table2 =document.getElementById("queueTable2")
+                      var charger1 = document.getElementById("charger1Table")
+                      var charger2 = document.getElementById("charger2Table")
                       if (table1.rows.length == 1) {
                         table2.deleteRow(1)
+                        charger2.rows.item(1).cells.item(0).textContent = table2.rows.item(1).cells.item(0).textContent
+                        charger2.rows.item(1).cells.item(4).textContent = table2.rows.item(1).cells.item(2).textContent
                       }
                       else if (table2.rows.length == 1) {
                         table1.deleteRow(1)
+                        charger1.rows.item(1).cells.item(0).textContent = table1.rows.item(1).cells.item(0).textContent
+                        charger1.rows.item(1).cells.item(4).textContent = table1.rows.item(1).cells.item(2).textContent
                       }
                       else{
                         var time1 = table1.rows.item(1).cells.item(3).textContent
                         var time2 = table2.rows.item(1).cells.item(3).textContent
                         if (time1 < time2) {
                           table1.deleteRow(1);
+                          charger1.rows.item(1).cells.item(0).textContent = table1.rows.item(1).cells.item(0).textContent
+                          charger1.rows.item(1).cells.item(4).textContent = table1.rows.item(1).cells.item(2).textContent
                         }
                         else {
                           table2.deleteRow(1)
+                          charger2.rows.item(1).cells.item(0).textContent = table2.rows.item(1).cells.item(0).textContent
+                          charger2.rows.item(1).cells.item(4).textContent = table2.rows.item(1).cells.item(2).textContent
                         }
                       }
                     }
