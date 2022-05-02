@@ -1962,7 +1962,7 @@
             </script>
           <div data-bind="visible: !status.isError()" id="queueBox"
                class="box box-full left">
-            <h2 class="left" style="width: 1000px">Current Queue</h2>
+            <h2 class="left" style="width: 1000px">Queue for Charger 1</h2>
             <table id="queueTable">
               <tr>
                 <th>User</th>
@@ -1973,8 +1973,19 @@
             </table>
           </div>
 
+          <div data-bind="visible: !status.isError()" id="queueBox2"
+               class="box box-full left">
+            <h2 class="left" style="width: 1000px">Queue for Charger 2</h2>
+            <table id="queueTable2">
+              <tr>
+                <th>User</th>
+                <th>Energy Requested</th>
+                <th>Time Requested</th>
+                <th>Estimated Wait Time</th>
+              </tr>
+            </table>
+          </div>
         </div>
-
         <!--end tab 7-->
 
 
