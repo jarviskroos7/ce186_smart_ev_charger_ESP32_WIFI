@@ -42,7 +42,7 @@
         <label for="tab-6">Charger 2</label>
         <!--input id="tab-1" type="radio" name="tab-group" data-bind="checked: tab" value="system" />
         <label for="tab-1">System</label>
-        <input id="tab-2" type="radio" name="tab-group" data-bind="checked: tab" value="services" />
+        <!input id="tab-2" type="radio" name="tab-group" data-bind="checked: tab" value="services" />
         <label for="tab-2">Services</label>
         <input id="tab-4" type="radio" name="tab-group" data-bind="checked: tab" value="rapi" />
         <label for="tab-4" data-bind="visible: developerMode() &amp;&amp; status.evse_connected()">RAPI</label>
@@ -52,7 +52,7 @@
 
       <div id="content">
         <!--TAB 1: System -->
-        <!--div id="content-1" data-bind="visible: isSystem">
+        <div id="content-1" data-bind="visible: isSystem">
           <div class="box380 left">
             <h2>WiFi Setup</h2>
             <p><b>Mode:</b> <span id="mode" data-bind="text: status.fullMode"></span></p>
@@ -212,7 +212,7 @@
               <button onclick="window.open('term.html?evse');">OpenEVSE</button>
             </div>
           </div>
-        </div-->
+        </div>
         <!--end content 1-->
 
         <!--TAB 2: Services -->
@@ -535,7 +535,7 @@
             <h2 class="left">Status</h2>
             <h2 class="right" data-bind="text: status.estate"></h2>
 
-            <table>
+            <table id="charger1Table">
               <tr>
                 <th>User</th>
                 <th>Current</th>
@@ -544,7 +544,7 @@
                 <th>Time Remaining</th>
               </tr>
               <tr>
-                <td><span data-bind="text: myName.value"></span></td>
+                <td id="charger1User"></td>
                 <td><span data-bind="text: scaleString(status.amp(), 1000, 2) + ' A'"></span></td>
                 <td><span data-bind="text: scaleString(status.session_energy(), 1000, 2) + ' kWh'"></span></td>
                 <td><span data-bind="text: scaleString(status.temp(), 10, 1) + ' &deg;C'"></span></td>
@@ -1003,7 +1003,7 @@
               </thead>
               <tbody data-bind="foreach: logs.events">
                 <tr>
-                  <td><span data-bind="text: myName.value"></span></td>
+                  <td><span data-bind="text: localTime"></span></td>
                   <td><span data-bind="text: localTime"></span></td>
                   <td><span data-bind="text: scaleString(energy(), 1000, 2) + ' kWh'"></span></td>
                 </tr>
@@ -1369,7 +1369,7 @@
             <h2 class="left">Status</h2>
             <h2 class="right" data-bind="text: status.estate"></h2>
 
-            <table>
+            <table id="charger2Table">
               <tr>
                 <th>User</th>
                 <th>Current</th>
@@ -1837,7 +1837,7 @@
               </thead>
               <tbody data-bind="foreach: logs.events">
                 <tr>
-                  <td><span data-bind="text: myName.value"></span></td>
+                  <td><span data-bind="text: localTime"></span></td>
                   <td><span data-bind="text: localTime"></span></td>
                   <td><span data-bind="text: scaleString(energy(), 1000, 2) + ' kWh'"></span></td>
                 </tr>
@@ -1888,9 +1888,22 @@
                 return document.getElementById("myName");
               };
               function addQueue(name, time, energy){
-                var eta = 0;
-                var table = document.getElementById("queueTable")
-                if (!!document.getElementById("initialETA")) {
+                var table1 = document.getElementById("queueTable")
+                var table2 = document.getElementById("queueTable2")
+                var table = table1
+                if (table1.rows.length == 1) {
+                  table = table1
+                }
+                else if (table2.rows.length == 1) {
+                  table = table2
+                }
+                else if (table1.rows.item(table1.rows.length - 1).cells.item(3).textContent < table2.rows.item(table2.rows.length - 1).cells.item(3).textContent){
+                  table = table1
+                }
+                else {
+                  table = table2
+                }
+                if (table.rows.length != 1) {
                   prevTime = table.rows.item(table.rows.length - 1).cells.item(3).textContent
                   eta = parseFloat(prevTime.slice(0, parseFloat(prevTime) - 7)) + parseFloat(document.getElementById("myTime").value);
                 } else {
@@ -1919,7 +1932,7 @@
                 row.appendChild(energyCell);
                 row.appendChild(timeCell);
                 row.appendChild(ETACell);
-                document.getElementById("queueTable").appendChild(row);
+                table.appendChild(row);
               };
             </script>
             <script>
@@ -1956,7 +1969,7 @@
             </script>
           <div data-bind="visible: !status.isError()" id="queueBox"
                class="box box-full left">
-            <h2 class="left" style="width: 1000px">Current Queue</h2>
+            <h2 class="left" style="width: 1000px">Queue for Charger 1</h2>
             <table id="queueTable">
               <tr>
                 <th>User</th>
@@ -1967,8 +1980,19 @@
             </table>
           </div>
 
+          <div data-bind="visible: !status.isError()" id="queueBox2"
+               class="box box-full left">
+            <h2 class="left" style="width: 1000px">Queue for Charger 2</h2>
+            <table id="queueTable2">
+              <tr>
+                <th>User</th>
+                <th>Energy Requested</th>
+                <th>Time Requested</th>
+                <th>Estimated Wait Time</th>
+              </tr>
+            </table>
+          </div>
         </div>
-
         <!--end tab 7-->
 
 
